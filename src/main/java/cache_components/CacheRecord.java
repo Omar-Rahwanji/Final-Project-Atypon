@@ -7,4 +7,3 @@ public class CacheRecord extends CacheItem {
         this.row=row;
     }
 }
-

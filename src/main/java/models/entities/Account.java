@@ -50,8 +50,9 @@ public class Account extends Entity {
         lock.unlock();
     }
 
+
     @Override
     public String toString() {
-        return getId()+","+ getCustomerId()+","+ getUsername()+","+ getPassword();
+        return getId() + "," + getCustomerId() + "," + getUsername() + "," + getPassword();
     }
 }

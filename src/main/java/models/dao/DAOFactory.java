@@ -12,3 +12,4 @@ public class DAOFactory {
             return new NullDAO();
     }
 }
+

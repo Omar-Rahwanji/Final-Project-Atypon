@@ -13,7 +13,7 @@ import java.io.FileReader;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class OperationsUtilities {
+public class OperationsUtil {
     private static final String TABLE1 = "customersTable.csv";
     private static final String TABLE2 = "accountsTable.csv";
 
@@ -25,7 +25,7 @@ public class OperationsUtilities {
 
     private static final EntityFactory entityFactory = EntityFactory.getEntityFactory();
 
-    private OperationsUtilities(){}
+    private OperationsUtil(){}
 
     public static void chooseTable(int tableIndex){
         if(tableIndex == 0){
@@ -39,7 +39,7 @@ public class OperationsUtilities {
     }
 
     public static int getTableIndex(String table){
-        if(table.equalsIgnoreCase("customer"))
+        if(table.equalsIgnoreCase(ENTITY1))
             return 0;
         else
             return 1;
@@ -68,13 +68,14 @@ public class OperationsUtilities {
                 Entity selectedRecord = cachedRecords[tableIndex].get(Integer.parseInt(tokens[1]));
                 if (selectedRecord.equals(NullEntity.getInstance())){ //Cache miss
                     System.out.println("cache miss & id = "+tokens[1]);
-                    while ((nextRecord = csvReader.readNext()) != null)
-                    if (nextRecord[column].equals(tokens[1])) { //Record Id
-                        Entity row = entityFactory.getEntityByType(entity);
-                        row.setAttributes(nextRecord);
-                        CacheItem cachedRecord = new CacheRecord(row);
-                        cachedRecords[tableIndex].put(Integer.parseInt(tokens[1]), cachedRecord);
-                        return row;
+                    while ((nextRecord = csvReader.readNext()) != null){
+                        if (nextRecord[column].equals(tokens[1])) { //Record Id
+                            Entity row = entityFactory.getEntityByType(entity);
+                            row.setAttributes(nextRecord);
+                            CacheItem cachedRecord = new CacheRecord(row);
+                            cachedRecords[tableIndex].put(Integer.parseInt(tokens[1]), cachedRecord);
+                            return row;
+                        }
                     }
                 }
                 else{

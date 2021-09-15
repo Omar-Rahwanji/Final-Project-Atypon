@@ -28,7 +28,7 @@
 	</style>
 </head>
 <body>
-	<form action="/login.do" method="POST">
+	<form action="${pageContext.request.contextPath}/login.do" method="POST">
 		<fieldset>
 			<legend><strong>Log in</strong></legend>
 			<br />

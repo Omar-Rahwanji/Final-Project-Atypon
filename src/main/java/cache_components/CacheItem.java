@@ -12,3 +12,4 @@ public abstract class CacheItem {
         this.hitCount++;
     }
 }
+

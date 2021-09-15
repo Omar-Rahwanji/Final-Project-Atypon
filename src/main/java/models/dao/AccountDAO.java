@@ -37,8 +37,8 @@ public class AccountDAO implements DAO{
         lock.unlock();
     }
 
-    public String getValueByName(Entity record, String name) {
-        Account account = (Account) record;
+    public String getValueByName(Entity row, String name) {
+        Account account = (Account) row;
         switch (name) {
             case "id":
                 return Integer.toString(account.getId());

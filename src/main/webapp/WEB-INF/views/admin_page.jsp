@@ -50,8 +50,8 @@
     </style>
 </head>
 <body>
-	<button><a href="/login.do">Logout</a></button>
-	<form action="/home" method="POST">
+	<button><a href="${pageContext.request.contextPath}/login.do">Logout</a></button>
+	<form action="${pageContext.request.contextPath}/home" method="POST">
 		<fieldset>
 			<legend><strong>Operations on Customers</strong></legend>
 			<br />
@@ -103,7 +103,7 @@
     		<label>Read</label><input type="text" name="readStatementAccount" placeholder="col=value">
    			<input type="submit" name="operation" value="Read Account" />
             <br /><br />
-   			<label>Insert</label><input type="text" name="insertStatementAccount" placeholder="id,customerId,username">
+   			<label>Insert</label><input type="text" name="insertStatementAccount" placeholder="id,customerId,username,password">
    			<input type="submit" name="operation" value="Insert Account" />
     		<br /><br />
     		<label>Update</label><input type="text" name="updateStatementAccount" placeholder="col=value,col=new_value">

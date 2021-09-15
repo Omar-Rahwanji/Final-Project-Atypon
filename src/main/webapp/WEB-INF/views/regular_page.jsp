@@ -50,8 +50,8 @@
     </style>
 </head>
 <body>
-	<button><a href="/login.do">Logout</a></button>
-	<form action="/home" method="POST">
+	<button><a href="${pageContext.request.contextPath}/login.do">Logout</a></button>
+	<form action="${pageContext.request.contextPath}/home" method="POST">
 		<fieldset>
 			<legend><strong>Operations on Customers</strong></legend>
 			<br />

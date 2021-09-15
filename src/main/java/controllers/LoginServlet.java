@@ -15,16 +15,22 @@ import java.io.IOException;
 
 @WebServlet(name = "servlets.LoginServlet", value = "/login.do")
 public class LoginServlet extends HttpServlet {
-    protected CacheFactory cacheFactory = CacheFactory.getCacheFactory();
-    protected Cache[] cachedRecords = {cacheFactory.getCacheByType("Database", 500), cacheFactory.getCacheByType("Database", 500)};
+    protected final CacheFactory cacheFactory = CacheFactory.getCacheFactory();
+    protected final Cache[] cachedRecords = {cacheFactory.getCacheByType("Database", 500), cacheFactory.getCacheByType("Database", 500)};
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        }catch (ServletException servletException){
+            servletException.printStackTrace();
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
             HttpSession session = request.getSession();
             session.setAttribute("cachedRecords", cachedRecords);
             String userType;
@@ -33,6 +39,12 @@ public class LoginServlet extends HttpServlet {
             else
                 userType="regular";
             session.setAttribute("userType", userType);
-            request.getRequestDispatcher("/WEB-INF/views/" + userType + "_page.jsp").forward(request, response);
+            try{
+                request.getRequestDispatcher("/WEB-INF/views/" + userType + "_page.jsp").forward(request, response);
+            }catch (ServletException servletException){
+                servletException.printStackTrace();
+            }catch (IOException ioException){
+                ioException.printStackTrace();
+            }
     }
 }

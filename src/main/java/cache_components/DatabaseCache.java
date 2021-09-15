@@ -1,9 +1,10 @@
 package cache_components;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DatabaseCache extends Cache {
+public class DatabaseCache extends Cache implements Serializable {
 
     public DatabaseCache(int capacity) {
         this.capacity = capacity;  //
