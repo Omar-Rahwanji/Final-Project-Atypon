@@ -96,7 +96,7 @@
 		</fieldset>
 	</form>
 	<br /><br />
-	<form action="/home" method="POST">
+	<form action="${pageContext.request.contextPath}/home" method="POST">
     	<fieldset>
     		<legend><strong>Operations on Accounts</strong></legend>
     		<br />
