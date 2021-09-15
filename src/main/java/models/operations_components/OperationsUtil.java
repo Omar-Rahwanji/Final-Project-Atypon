@@ -10,8 +10,6 @@ import models.entities.EntityFactory;
 import models.entities.NullEntity;
 
 import java.io.FileReader;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class OperationsUtil {
     private static final String TABLE1 = "customersTable.csv";
@@ -56,7 +54,6 @@ public class OperationsUtil {
 
     public static Entity searchRecords(int tableIndex, String delimiter, Cache[] cachedRecords) {
         chooseTable(tableIndex);
-        Lock lock = new ReentrantLock();
         try (FileReader fileReader = new FileReader(TABLES_PATH + table);
              CSVReader csvReader = new CSVReaderBuilder(fileReader).withSkipLines(1).build()) {
             String[] nextRecord;
@@ -64,7 +61,6 @@ public class OperationsUtil {
             String comparisonToken=tokens[2];
             int column = 0;
             if (comparisonToken.equals("=")) {
-                lock.lock();
                 Entity selectedRecord = cachedRecords[tableIndex].get(Integer.parseInt(tokens[1]));
                 if (selectedRecord.equals(NullEntity.getInstance())){ //Cache miss
                     System.out.println("cache miss & id = "+tokens[1]);
@@ -85,9 +81,6 @@ public class OperationsUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally{
-            lock.unlock();
         }
         return NullEntity.getInstance();
     }

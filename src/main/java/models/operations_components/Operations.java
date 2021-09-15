@@ -23,12 +23,19 @@ public class Operations implements Read, Insert, Update, Delete {
     public boolean insertRecord(int tableIndex, String newRecord, Cache[] databaseCache) {
         OperationsUtil.chooseTable(tableIndex);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(TABLES_PATH + OperationsUtil.table, true))) {
-            String[] customerAttributes = newRecord.split(",");
-            int recordId = Integer.parseInt(customerAttributes[0]);
+            String[] recordAttributes = newRecord.split(",");
+            int recordId = Integer.parseInt(recordAttributes[0]);
             Entity similarRecord = OperationsUtil.searchRecords(tableIndex,"id=" + recordId, databaseCache);
+            if(tableIndex == 1){
+                int ForeignKeyId = Integer.parseInt(recordAttributes[1]);
+                Entity similarRecordForeignKey = OperationsUtil.searchRecords(0,"id=" + ForeignKeyId, databaseCache);
+                if(similarRecordForeignKey.equals(NullEntity.getInstance()))
+                    return false;
+                OperationsUtil.chooseTable(tableIndex);
+            }
             if (similarRecord.equals(NullEntity.getInstance())) {
                 Entity row = entityFactory.getEntityByType(OperationsUtil.entity);
-                row.setAttributes(customerAttributes);
+                row.setAttributes(recordAttributes);
                 row.setDatabaseEntity(row);
                 writer.write(row + System.lineSeparator());
                 writer.flush();
@@ -55,6 +62,15 @@ public class Operations implements Read, Insert, Update, Delete {
 
             if (newColumnValue[0].equals("id")) // ID should remain unique
                 return false;
+            if(tableIndex == 1 && newColumnValue[0].equals("customerId")){
+                int ForeignKeyId = Integer.parseInt(newColumnValue[1]);
+                Entity similarRecordForeignKey = OperationsUtil.searchRecords(0,"id=" + ForeignKeyId, databaseCache);
+                if(similarRecordForeignKey.equals(NullEntity.getInstance()))
+                    return false;
+                OperationsUtil.chooseTable(tableIndex);
+            }
+
+            if (newColumnValue[0].equals("id")) // ID should remain unique
             databaseCache[tableIndex].deleteByKey(recordId);
             deleteRecord(tableIndex, commands[0], databaseCache);
             OperationsUtil.chooseTable(tableIndex);

@@ -42,12 +42,15 @@ public class Account extends Entity {
 
     @Override
     public void setAttributes(String[] attributes) {
-        lock.lock();
-        setId(Integer.parseInt(attributes[0]));
-        setCustomerId(Integer.parseInt(attributes[1]));
-        setUsername(attributes[2]);
-        setPassword(attributes[3]);
-        lock.unlock();
+        try{
+            lock.lock();
+            setId(Integer.parseInt(attributes[0]));
+            setCustomerId(Integer.parseInt(attributes[1]));
+            setUsername(attributes[2]);
+            setPassword(attributes[3]);
+        }finally{
+            lock.unlock();
+        }
     }
 
 

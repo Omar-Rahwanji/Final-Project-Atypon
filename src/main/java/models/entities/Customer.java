@@ -53,13 +53,16 @@ public class Customer extends Entity {
 
     @Override
     public void setAttributes(String[] attributes) {
-        lock.lock();
-        setId(Integer.parseInt(attributes[0]));
-        setName(attributes[1]);
-        setCountry(attributes[2]);
-        setPhone(Integer.parseInt(attributes[3]));
-        setEmail(attributes[4]);
-        lock.unlock();
+        try{
+            lock.lock();
+            setId(Integer.parseInt(attributes[0]));
+            setName(attributes[1]);
+            setCountry(attributes[2]);
+            setPhone(Integer.parseInt(attributes[3]));
+            setEmail(attributes[4]);
+        }finally{
+            lock.unlock();
+        }
     }
 
     @Override
