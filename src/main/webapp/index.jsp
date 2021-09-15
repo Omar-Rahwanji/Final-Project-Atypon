@@ -38,7 +38,7 @@
 </head>
 <body>
 	<h1>Welcome to <strong>My</strong> Multithreaded In-memory Database System</h1>
-	<h2>"Redis is in danger ⚠"</h2>
+	<h2>"Redis is in danger ⚠"</h2>test
 	<button><a href="${pageContext.request.contextPath}/login.do">To login, click me</a></button>
 </body>
 </html>
